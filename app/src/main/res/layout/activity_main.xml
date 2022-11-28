@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    tools:context=".MainActivity">
+
+   <include
+       android:layout_height="wrap_content"
+       android:layout_width="match_parent"
+       layout="@layout/toolbar"></include>
+
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:openDrawer="start"
+        android:id="@+id/drawerlayout"
+        android:background="#fff"
+        tools:context=".MainActivity"
+
+        android:backgroundTint="#fff"
+        >
+        <include
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            layout="@layout/mainactivity_detail"></include>
+        <com.google.android.material.navigation.NavigationView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:headerLayout="@layout/header"
+            app:menu="@menu/menu"
+            app:itemTextColor="@color/teal_200"
+            android:background="#fff"
+            android:layout_gravity="start"
+            android:id="@+id/navigation">
+
+        </com.google.android.material.navigation.NavigationView>
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

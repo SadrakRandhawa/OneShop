@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">OneShop</string>
+    <string name="underline"><u>forget password</u></string>
+    <string name="signup"><u>Sign up</u></string>
+    <string name="Close">close</string>
+    <string name="Open">Open</string>
+</resources>
