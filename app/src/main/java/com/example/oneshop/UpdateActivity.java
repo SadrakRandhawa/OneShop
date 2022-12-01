@@ -41,7 +41,7 @@ public class UpdateActivity extends AppCompatActivity {
         position = intent.getExtras().getInt("position");
         //position = intent.getExtras().getInt("position");
         tv.setText(fetchRecordModelArrayList.get(position).getId());
-        Glide.with(this).load(fetchRecordModelArrayList.get(position).getImage()).into(imageView);
+        Glide.with(this).load("http://192.168.100.6:8080/OneShop/image/" + fetchRecordModelArrayList.get(position).getImage()).into(imageView);
         title.setText(fetchRecordModelArrayList.get(position).getTitle());
         detail.setText(fetchRecordModelArrayList.get(position).getDetail());
         price.setText(fetchRecordModelArrayList.get(position).getPrice());

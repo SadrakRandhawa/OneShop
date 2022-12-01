@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -17,7 +18,7 @@ import android.widget.TextView;
 public class SplashScreen extends AppCompatActivity {
 
 
-    TextView textViewtitle;
+    TextView textViewtitle, powerbysadrak;
     ImageView imageView;
     Handler handler;
     @Override
@@ -26,6 +27,14 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
         imageView = findViewById(R.id.SplashImg);
         textViewtitle = findViewById(R.id.SplashText);
+        powerbysadrak = findViewById(R.id.poweredbysadrak);
+
+        // powered by bold value
+//        String abc = "Powered by";
+//        String sadrak = "sadrak";
+//        String boldValue =  abc +"<b>" + sadrak + " " +  "</b>" ;
+//        powerbysadrak.setText(Html.fromHtml(boldValue));
+
 
 
 //        getWindow().setFlags(

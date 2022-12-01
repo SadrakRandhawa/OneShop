@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.OneShop" parent="Theme.AppCompat.NoActionBar">
-        <!-- Primary brand color. -->
+<!--        &lt;!&ndash; Primary brand color. &ndash;&gt;Theme.AppCompat.NoActionBar-->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>

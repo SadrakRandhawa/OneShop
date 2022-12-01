@@ -8,6 +8,8 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Html;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -74,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String value = intent.getStringExtra("userName");
         toolbartext.setText(value);
+        toolbartext.setTextColor(Color.parseColor("#bdbdbd"));
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -81,7 +85,9 @@ public class MainActivity extends AppCompatActivity {
                 switch (value)
                 {
                     case R.id.dashboard:
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+                        startActivity(new Intent(MainActivity.this,MainActivity.class));
+                        finish();
                         break;
                     case R.id.aboutus:
                         Toast.makeText(MainActivity.this, "About Us", Toast.LENGTH_SHORT).show();
@@ -90,11 +96,15 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Contact Us", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.logout:
+
+                        SharedPreferences sharedPreferences = getSharedPreferences("private",MODE_PRIVATE);
+                        sharedPreferences.edit().remove("logged").commit();
                         Intent intent = new Intent(MainActivity.this,loginActivity.class);
-                        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
+//                        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        startActivity(intent);
                         finish();
                         break;
                 }

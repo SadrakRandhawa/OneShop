@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
@@ -30,6 +31,8 @@ public class loginActivity extends AppCompatActivity {
         activityLoginBinding = ActivityLoginBinding.inflate(getLayoutInflater());
         View view = activityLoginBinding.getRoot();
         setContentView(view);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 //        activityLoginBinding.loginPass.setTransformationMethod(new PasswordTransformationMethod());
 //        activityLoginBinding.loginPass.setTransformationMethod(null);
@@ -38,7 +41,12 @@ public class loginActivity extends AppCompatActivity {
         if(sharedPreferences.getBoolean("logged",false))
          {
              MainPage();
+
          }
+        else
+        {
+            MainPageAfterloggedIn();
+        }
 
 
         //setContentView(R.layout.activity_login);
@@ -74,11 +82,14 @@ public class loginActivity extends AppCompatActivity {
          });
     }
 
+    private void MainPageAfterloggedIn() {
+    }
+
     private void MainPage() {
         Intent intent = new Intent(this,MainActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("name",email);
-        bundle.putString("password", password);
+//        bundle.putString("name",email);
+//        bundle.putString("password", password);
         intent.putExtras(bundle);
         //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

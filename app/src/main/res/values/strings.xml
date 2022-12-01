@@ -4,4 +4,5 @@
     <string name="signup"><u>Sign up</u></string>
     <string name="Close">close</string>
     <string name="Open">Open</string>
+    <string name="Bold">Powered by <b>Sadrak</b></string>
 </resources>
