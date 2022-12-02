@@ -47,9 +47,9 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull RecAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.title.setText(arrayList.get(position).getTitle());
-        holder.detail.setText(arrayList.get(position).getDetail());
-        holder.price.setText(arrayList.get(position).getPrice());
-        Glide.with(holder.title.getContext()).load("http://192.168.100.6:8080/OneShop/image/" + arrayList.get(position).getImage()).into(holder.imageView);
+        holder.detail.setText(arrayList.get(position).getDetail());//http://192.168.100.6:8080/OneShop/image/
+        holder.price.setText(arrayList.get(position).getPrice());//https://heard-leaders.000webhostapp.com/image/
+        Glide.with(holder.title.getContext()).load("https://heard-leaders.000webhostapp.com/image/" + arrayList.get(position).getImage()).into(holder.imageView);
 //        Glide.with(context).load(arrayList.get(position).getImage()).into(holder.imageView);
         setAnimation(holder.itemView, position);
 

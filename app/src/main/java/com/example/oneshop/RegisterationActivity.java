@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +34,21 @@ public class RegisterationActivity extends AppCompatActivity {
         activityRegisterationBinding = ActivityRegisterationBinding.inflate(getLayoutInflater());
         View view = activityRegisterationBinding.getRoot();
          setContentView(view);
+         activityRegisterationBinding.signupeyeoff.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 if(activityRegisterationBinding.regPass.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance()))
+                 {
+                     activityRegisterationBinding.regPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                     activityRegisterationBinding.signupeyeoff.setImageResource(R.drawable.visibilityofff);
+                 }
+                 else
+                 {
+                     activityRegisterationBinding.regPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                     activityRegisterationBinding.signupeyeoff.setImageResource(R.drawable.visibilityonn);
+                 }
+             }
+         });
 
          activityRegisterationBinding.regBtn.setOnClickListener(new View.OnClickListener() {
              @Override

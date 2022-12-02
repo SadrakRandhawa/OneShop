@@ -40,9 +40,9 @@ public class UpdateActivity extends AppCompatActivity {
         Intent intent = getIntent();
         position = intent.getExtras().getInt("position");
         //position = intent.getExtras().getInt("position");
-        tv.setText(fetchRecordModelArrayList.get(position).getId());
-        Glide.with(this).load("http://192.168.100.6:8080/OneShop/image/" + fetchRecordModelArrayList.get(position).getImage()).into(imageView);
-        title.setText(fetchRecordModelArrayList.get(position).getTitle());
+        tv.setText(fetchRecordModelArrayList.get(position).getId());//https://heard-leaders.000webhostapp.com/image/
+        Glide.with(this).load("https://heard-leaders.000webhostapp.com/image/" + fetchRecordModelArrayList.get(position).getImage()).into(imageView);
+        title.setText(fetchRecordModelArrayList.get(position).getTitle()); //http://192.168.100.6:8080/OneShop/image/
         detail.setText(fetchRecordModelArrayList.get(position).getDetail());
         price.setText(fetchRecordModelArrayList.get(position).getPrice());
         

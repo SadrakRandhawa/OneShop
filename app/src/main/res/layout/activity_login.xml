@@ -13,7 +13,7 @@
         android:layout_width="100dp"
         android:layout_height="80dp"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="120dp"
         android:src="@drawable/icon_online"></ImageView>
 
 
@@ -42,6 +42,7 @@
     <LinearLayout
         android:layout_width="250dp"
         android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
@@ -56,30 +57,50 @@
         <EditText
             android:id="@+id/loginEmail"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
             android:layout_gravity="center"
             android:inputType="text"
-            android:layout_marginTop="5dp"
             android:paddingLeft="10dp"
+            android:textCursorDrawable="@drawable/color_cursor"
             android:textColor="#003333"
             android:hint="Email"
+            android:textSize="14dp"
             android:textColorHint="#b3b3b3"
             android:background="@drawable/edittext_border">
         </EditText>
-        <EditText
-            android:id="@+id/loginPass"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:inputType="textPassword"
+            android:layout_height="35dp"
             android:layout_marginTop="20dp"
-            android:paddingLeft="10dp"
-            android:minLines="1"
-            android:textColor="#003333"
-            android:hint="Password"
-            android:textColorHint="#b3b3b3"
+            android:orientation="horizontal"
+            android:weightSum="1"
             android:background="@drawable/edittext_border">
-        </EditText>
+            <EditText
+                android:id="@+id/loginPass"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:inputType="textPassword"
+                android:background="@null"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:paddingLeft="10dp"
+                android:minLines="1"
+                android:textColor="#003333"
+                android:layout_weight="0.8"
+                android:textSize="14dp"
+                android:hint="Password"
+                android:textColorHint="#b3b3b3">
+            </EditText>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:layout_gravity="center"
+                android:id="@+id/passIcon"
+                android:src="@drawable/visibilityofff"></ImageView>
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/forgetpassword"

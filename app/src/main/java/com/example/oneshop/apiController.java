@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class apiController {
 
-    public static String baseUrl = "http://192.168.100.6:8080/OneShop/";
+    public static String baseUrl = "https://heard-leaders.000webhostapp.com/";//"http://192.168.100.6:8080/OneShop/";
     private static apiController apiController;
     private static Retrofit retrofit;
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.WindowManager;
@@ -33,6 +34,24 @@ public class loginActivity extends AppCompatActivity {
         setContentView(view);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
+// Custom Hide/Show Password fields
+       activityLoginBinding.passIcon.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               if(activityLoginBinding.loginPass.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance()))
+               {
+                   activityLoginBinding.loginPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                   activityLoginBinding.passIcon.setImageResource(R.drawable.visibilityofff);
+               }
+               else
+               {
+                   activityLoginBinding.loginPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                   activityLoginBinding.passIcon.setImageResource(R.drawable.visibilityonn);
+               }
+           }
+       });
 
 //        activityLoginBinding.loginPass.setTransformationMethod(new PasswordTransformationMethod());
 //        activityLoginBinding.loginPass.setTransformationMethod(null);
