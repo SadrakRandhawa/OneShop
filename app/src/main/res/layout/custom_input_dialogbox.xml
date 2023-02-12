@@ -1,6 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="270dp"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal|center_vertical"
+    android:background="@drawable/alertdialog_box"
+    >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Are you Admin?"
+            android:textSize="16dp"
+            android:textColor="#FF018786"
+            android:layout_gravity="center_horizontal"
+           ></TextView>
+    <EditText
+        android:id="@+id/AdminName"
+        android:layout_width="250dp"
+        android:layout_height="35dp"
+        android:inputType="text"
+        android:hint="Name"
+        android:paddingLeft="10dp"
+        android:textCursorDrawable="@drawable/color_cursor"
+        android:textSize="12dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edittext_border"
+        android:layout_gravity="center"></EditText>
+        <LinearLayout
+            android:layout_width="250dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:weightSum="1"
+            android:background="@drawable/edittext_border">
+            <EditText
+                android:id="@+id/AdminPass"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:inputType="textPassword"
+                android:background="@null"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:paddingLeft="10dp"
+                android:minLines="1"
+                android:textColor="#003333"
+                android:layout_weight="0.8"
+                android:textSize="14dp"
+                android:hint="Password"
+                android:textColorHint="#b3b3b3">
+            </EditText>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:layout_gravity="center"
+                android:id="@+id/passIcon"
+                android:src="@drawable/visibilityofff"></ImageView>
+        </LinearLayout>
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:text="Admin Login"
+            android:textAllCaps="false"
+            android:textColor="#fff"
+            android:layout_marginTop="20dp"
+            android:id="@+id/adminloginBtn"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/button_radius"></Button>
+    </LinearLayout>

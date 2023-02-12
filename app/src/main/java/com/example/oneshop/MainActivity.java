@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,18 +16,28 @@ import android.os.Bundle;
 
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import android.text.Html;
+import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.oneshop.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -44,9 +55,16 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
 
-    RecyclerView recyclerView;
+    //Admin work
+    EditText adminName,adminPass;
+    Button adminButton;
+
+    RecyclerView recyclerView, furnrecyclerview, electronicrecycler;
     RecAdapter recAdapter;
+    ElectronicesAdapter electronicesAdapter;
+    furnitureAdapter furnitureAdapter;
      public static List<fetchRecordModel> fetchRecordModelArrayList;
+     public static List<fetchElectronicModel> fetchElectronicModelList;
     TextView toolbartext,uploadRecord;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
                 switch (value)
                 {
                     case R.id.dashboard:
-
                         startActivity(new Intent(MainActivity.this,MainActivity.class));
                         finish();
                         break;
@@ -116,17 +133,90 @@ public class MainActivity extends AppCompatActivity {
         });
 
         fetchRecordModelArrayList = new ArrayList<>();
+        fetchElectronicModelList = new ArrayList<>();
         recyclerView = findViewById(R.id.recView);
-        recyclerView.setHasFixedSize(true);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this,1);
-        recyclerView.setLayoutManager(gridLayoutManager);
-       // recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        electronicrecycler = findViewById(R.id.recView1);
+        furnrecyclerview = findViewById(R.id.recView2);
 
+        recyclerView.setHasFixedSize(true);
+        //GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this,1);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false);
+        //recyclerView.setLayoutManager(gridLayoutManager);
+
+        //recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this,LinearLayoutManager.HORIZONTAL,false));
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.addItemDecoration(new LinePagerIndicatorDecoration());
+        linearLayoutManager.findFirstVisibleItemPosition();
+        SnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(recyclerView);
+        //recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(),1));
+
+        //electronices
+
+//
+        LinearLayoutManager electricManager = new LinearLayoutManager(MainActivity.this,LinearLayoutManager.HORIZONTAL,false);
+        electronicrecycler.setLayoutManager(electricManager);
+        electronicrecycler.addItemDecoration(new LinePagerIndicatorDecoration());
+        linearLayoutManager.findFirstVisibleItemPosition();
+        SnapHelper snapHelperele = new PagerSnapHelper();
+        snapHelperele.attachToRecyclerView(electronicrecycler);
+        //Admin work
 
         uploadRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,InsertActivity.class));
+
+              AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+              View layoutinflater = LayoutInflater.from(getApplicationContext()).inflate(R.layout.custom_input_dialogbox,null);
+
+                adminName = layoutinflater.findViewById(R.id.AdminName);
+                adminPass = layoutinflater.findViewById(R.id.AdminPass);
+                adminButton = layoutinflater.findViewById(R.id.adminloginBtn);
+                ImageView imageView = layoutinflater.findViewById(R.id.passIcon);
+
+                builder.setView(layoutinflater);
+
+
+                final AlertDialog alertDialog = builder.create();
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(adminPass.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance()))
+                        {
+                            adminPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            imageView.setImageResource(R.drawable.visibilityofff);
+                        }
+                        else
+                        {
+                            adminPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            imageView.setImageResource(R.drawable.visibilityonn);
+                        }
+                    }
+                });
+                adminButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        final String name = adminName.getText().toString().trim();
+                        final String password = adminPass.getText().toString().trim();
+                        if(name.isEmpty() || password.isEmpty())
+                        {
+                            Toast.makeText(MainActivity.this, "Please fill manadatory fields first", Toast.LENGTH_SHORT).show();
+                        }
+                     else if(name.contentEquals("Sadrak") && password.contentEquals("Sadrak123"))
+                     {
+
+                         startActivity(new Intent(MainActivity.this,InsertActivity.class));
+                     }
+                     else
+                     {
+                         Toast.makeText(MainActivity.this, "Please Enter correct Name and Password", Toast.LENGTH_SHORT).show();
+                     }
+
+                    }
+                });
+             alertDialog.show();
+
+
             }
         });
 
@@ -170,10 +260,30 @@ public class MainActivity extends AppCompatActivity {
         }));
 
         getListValue();
+        getElectronicsValue();
 
 
 
 
+    }
+
+    private void getElectronicsValue() {
+        Call<List<fetchElectronicModel>> call = apiController.getInstance().myapi().getElectroniclist();
+        call.enqueue(new Callback<List<fetchElectronicModel>>() {
+            @Override
+            public void onResponse(Call<List<fetchElectronicModel>> call, Response<List<fetchElectronicModel>> response) {
+                fetchElectronicModelList = response.body();
+                electronicesAdapter = new ElectronicesAdapter(fetchElectronicModelList, getApplicationContext());
+//                recAdapter = new RecAdapter(md);
+                electronicrecycler.setAdapter(electronicesAdapter);
+                electronicesAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<fetchElectronicModel>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void Delete(String id)
@@ -228,7 +338,29 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finishAffinity();
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("You want to Exist");
+
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        androidx.appcompat.app.AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        //super.onBackPressed();
     }
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        finishAffinity();
+//
+//    }
 }

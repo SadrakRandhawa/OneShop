@@ -1,6 +1,10 @@
 package com.example.oneshop;
 
 
+import static com.example.oneshop.fetchRecordModel.ItemView_electronics;
+import static com.example.oneshop.fetchRecordModel.ItemView_furniture;
+import static com.example.oneshop.fetchRecordModel.ItemView_property;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,6 +34,23 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
     private final Context context;
 
 
+    @Override
+    public int getItemViewType(int position) {
+       // return super.getItemViewType(position);
+        switch (arrayList.get(position).getViewType())
+        {
+            case 0:
+                return ItemView_property;
+            case 1:
+                return ItemView_electronics;
+            case 2:
+                return ItemView_furniture;
+            default:
+                return -1;
+
+        }
+    }
+
     public RecAdapter(List<fetchRecordModel> arrayList, Context context) {
         this.arrayList = arrayList;
         this.context = context;
@@ -40,6 +61,11 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
 
 
     public RecAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        //usint viewtype for multiple listview
+
+
+        //end viewtype for multiple listviews
+        //commented by Sadrak
         View view = LayoutInflater.from(context).inflate(R.layout.singlerow, parent, false);
         return new ViewHolder(view);
     }
@@ -112,8 +138,6 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
             title = itemView.findViewById(R.id.textTitle);
             detail = itemView.findViewById(R.id.textDescription);
             price = itemView.findViewById(R.id.textPrice);
-
-
 //          itemView.setOnClickListener(new View.OnClickListener() {
 //              @Override
 //              public void onClick(View view) {
@@ -139,10 +163,30 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
 //
 //                }
 //            });
-
-
         }
-
-
     }
+//    class electronics extends RecyclerView.ViewHolder {
+//        ImageView imageViewelectronic;
+//        TextView titleele, detailele, priceele;
+//
+//        public electronics(@NonNull View itemView) {
+//            super(itemView);
+//            imageViewelectronic = itemView.findViewById(R.id.electronicImage);
+//            titleele = itemView.findViewById(R.id.textelectronics);
+//            detailele = itemView.findViewById(R.id.textDeselectronices);
+//            priceele = itemView.findViewById(R.id.textPriceelectronices);
+//        }
+//    }
+//    class furniture extends RecyclerView.ViewHolder {
+//        ImageView imageViewfurn;
+//        TextView titlefurn, detailfurn, pricefurn;
+//
+//        public furniture(@NonNull View itemView) {
+//            super(itemView);
+//            imageViewfurn = itemView.findViewById(R.id.furnitureImage);
+//            titlefurn = itemView.findViewById(R.id.textfurniture);
+//            detailfurn = itemView.findViewById(R.id.textDesfurniture);
+//            pricefurn = itemView.findViewById(R.id.textPricefurniture);
+//        }
+//    }
 }

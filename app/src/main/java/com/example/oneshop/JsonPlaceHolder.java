@@ -14,6 +14,21 @@ public interface JsonPlaceHolder {
     @GET("getShopData.php")
     Call<List<fetchRecordModel>> getlist();
 
+    //Electronics
+    @GET("getElectronicData.php")
+    Call<List<fetchElectronicModel>> getElectroniclist();
+
+    @FormUrlEncoded
+    @POST("uploadElectronic.php")
+    Call<responsemessage> uploadElectronicData(
+            @Field("image") String image,
+            @Field("name") String name,
+            @Field("quality") String qaulity,
+            @Field("warrenty") String warrenty,
+            @Field("price") String Price);
+
+    //Electronics
+
     @FormUrlEncoded
     @POST("oneShop.php")
     Call<responsemessage> Register(@Field("name") String Name,
