@@ -41,6 +41,8 @@ public class SplashScreen extends AppCompatActivity {
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN
 //        );
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                             WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Animation animationUtils = AnimationUtils.loadAnimation(this,R.anim.side_slide);
         imageView.startAnimation(animationUtils);

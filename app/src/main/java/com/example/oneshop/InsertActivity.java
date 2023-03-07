@@ -46,18 +46,21 @@ public class InsertActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),InsertPropertyRecord.class));
+                finish();
             }
         });
         insertElectronic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),InsertElectronicRecord.class));
+                finish();
             }
         });
         insertFurniture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(InsertActivity.this, "furniture Record not Available", Toast.LENGTH_SHORT).show();
+               startActivity(new Intent(getApplicationContext(),furnitureActivity.class));
+                finish();
             }
         });
 //        title = findViewById(R.id.InsertText);

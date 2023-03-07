@@ -32,7 +32,7 @@ public class apiController {
 
     }
 
-  JsonPlaceHolder myapi()
+  public JsonPlaceHolder myapi()
   {
       return retrofit.create(JsonPlaceHolder.class);
   }

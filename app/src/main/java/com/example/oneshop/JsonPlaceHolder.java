@@ -1,5 +1,7 @@
 package com.example.oneshop;
 
+import com.example.oneshop.models.furnitureModel;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -17,6 +19,7 @@ public interface JsonPlaceHolder {
     //Electronics
     @GET("getElectronicData.php")
     Call<List<fetchElectronicModel>> getElectroniclist();
+
 
     @FormUrlEncoded
     @POST("uploadElectronic.php")
@@ -58,4 +61,29 @@ public interface JsonPlaceHolder {
     @FormUrlEncoded
     @POST("DeleteData.php")
     Call<responsemessage> DeleteData(@Field("id") String id);
+
+//furniture methods
+
+    //Furniture
+    @GET("getFurnitureData.php")
+    Call<List<furnitureModel>> getfurnitureData();
+
+    @FormUrlEncoded
+    @POST("insertFurnitureData.php")
+    Call<responsemessage> insertFurniture( @Field("image") String image,
+                                           @Field("name") String name,
+                                           @Field("warrenty") String warrenty,
+                                           @Field("price") String Price
+                                           );
+
+    @FormUrlEncoded
+    @POST("updateFurnitureData.php")
+    Call<responsemessage> updateFurnitureData(@Field("id") String id,
+                                     @Field("name") String name,
+                                     @Field("warrenty") String warrenty,
+                                     @Field("price") String Price);
+
+    @FormUrlEncoded
+    @POST("deleteFurnitureData.php")
+    Call<responsemessage> DeleteFurnitureData(@Field("id") String id);
 }

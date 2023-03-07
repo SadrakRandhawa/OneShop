@@ -7,41 +7,41 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.oneshop.models.furnitureModel;
 
 import java.util.List;
 
 public class furnitureAdapter extends RecyclerView.Adapter<furnitureAdapter.ViewHolder> {
 
     private int LastPosition = -1;
-    List<fetchRecordModel> arrayList;
+    List<furnitureModel> arrayList;
     private final Context context;
 
-    public furnitureAdapter(List<fetchRecordModel> arrayList,Context context) {
+    public furnitureAdapter(List<furnitureModel> arrayList, Context context) {
         this.arrayList = arrayList;
         this.context = context;
     }
     @NonNull
     @Override
     public furnitureAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mainactivity_detailrecyclerviewone,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mainactivity_furnituredetail,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull furnitureAdapter.ViewHolder holder, int position) {
 
-        holder.titlefurniture.setText(arrayList.get(position).getTitle());
-        holder.detailfurniture.setText(arrayList.get(position).getDetail());//http://192.168.100.6:8080/OneShop/image/
+        holder.titlefurniture.setText(arrayList.get(position).getName());
+        holder.detailfurniture.setText(arrayList.get(position).getWarrenty());//http://192.168.100.6:8080/OneShop/image/
         holder.pricefurniture.setText(arrayList.get(position).getPrice());//https://heard-leaders.000webhostapp.com/image/
-        Glide.with(holder.titlefurniture.getContext()).load("https://heard-leaders.000webhostapp.com/image/" + arrayList.get(position).getImage()).into(holder.furnitureImage);
-//        Glide.with(context).load(arrayList.get(position).getImage()).into(holder.imageView);
+//        Glide.with(holder.titlefurniture.getContext()).load("https://heard-leaders.000webhostapp.com/image/" + arrayList.get(position).getImage()).into(holder.furnitureImage);
+        Glide.with(holder.titlefurniture.getContext()).load("https://heard-leaders.000webhostapp.com/image/"+arrayList.get(position).getImage()).into(holder.furnitureImage);
         setAnimation(holder.itemView, position);
 
     }
@@ -68,8 +68,8 @@ public class furnitureAdapter extends RecyclerView.Adapter<furnitureAdapter.View
             super(itemView);
             furnitureImage = itemView.findViewById(R.id.furnitureImage);
             titlefurniture = itemView.findViewById(R.id.textfurniture);
-            detailfurniture = itemView.findViewById(R.id.textDesfurniture);
-            pricefurniture = itemView.findViewById(R.id.textPricefurniture);
+            detailfurniture = itemView.findViewById(R.id.textwarrentyfurniture);
+            pricefurniture = itemView.findViewById(R.id.textpricefurniture);
         }
     }
 }

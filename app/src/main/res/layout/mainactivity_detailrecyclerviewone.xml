@@ -2,24 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_margin="5dp"
-    android:layout_height="250dp"
+    android:layout_height="wrap_content"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/tools"
     android:orientation="vertical"
-
     android:background="#fff"
     app:ignore="NamespaceTypo">
 
     <!--            <androidx.cardview.widget.CardView-->
         <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
+                    android:padding="2dp"
+                    android:layout_height="wrap_content"
                     android:id="@+id/myCardview"
                     android:layout_margin="5dp"
-                    app:cardElevation="3dp"
-            android:background="@drawable/recyclerview_border"
-                    app:cardCornerRadius="20dp"
-                    app:cardUseCompatPadding="true">
+                    app:cardElevation="9dp"
+                    card_view:cardBackgroundColor="#E6E6E6"
+                    card_view:cardCornerRadius="10dp"
+                    card_view:cardUseCompatPadding="true">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,20 +27,34 @@
 
         android:background="#fff"
         android:weightSum="5">
-        <ImageView
+
+<!--        <ImageView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:id="@+id/electronicImage"-->
+<!--            android:layout_weight="2"-->
+<!--            android:padding="10dp"-->
+<!--            android:background="@drawable/img"-->
+<!--            android:scaleType="centerCrop"></ImageView>-->
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/electronicImage"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/electronicImage"
+            app:civ_border_width="2dp"
             android:layout_weight="2"
             android:padding="10dp"
-            android:background="@drawable/img"
-            android:scaleType="centerCrop"></ImageView>
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            app:civ_border_color="#FF000000"/>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:orientation="vertical"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="0dp"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:layout_weight="3">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -58,6 +72,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
+                        android:textColor="#595959"
                         android:textSize="14dp"
                         android:id="@+id/textelectronics"></TextView>
                 </LinearLayout>
@@ -82,6 +97,7 @@
                         android:layout_height="wrap_content"
                         android:maxLines="1"
                         android:textSize="14dp"
+                        android:textColor="#595959"
                         android:id="@+id/textQuality"></TextView>
                 </LinearLayout>
                 <View
@@ -105,6 +121,7 @@
                         android:layout_height="wrap_content"
                         android:maxLines="1"
                         android:textSize="14dp"
+                        android:textColor="#595959"
                         android:id="@+id/textwarrenty"></TextView>
                 </LinearLayout>
                 <View
@@ -128,6 +145,7 @@
                         android:layout_height="wrap_content"
                         android:maxLines="1"
                         android:textSize="14dp"
+                        android:textColor="#595959"
                         android:id="@+id/textElecprice"></TextView>
                 </LinearLayout>
             </LinearLayout>

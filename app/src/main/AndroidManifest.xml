@@ -15,6 +15,20 @@
         android:theme="@style/Theme.OneShop"
         tools:targetApi="31">
         <activity
+            android:name=".updateFurniture"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".furnitureActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".InsertElectronicRecord"
             android:exported="false">
             <meta-data

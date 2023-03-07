@@ -136,7 +136,8 @@ public class InsertPropertyRecord extends AppCompatActivity {
         //bitmap.compress(Bitmap.CompressFormat.JPEG,100,byt);
 
         byte[] imageStore = byt.toByteArray();
-        imagedecoded = android.util.Base64.encodeToString(imageStore, Base64.DEFAULT);
+        imagedecoded = android.util.Base64.encodeToString(imageStore,Base64.DEFAULT);
+        //imagedecoded = android.util.Base64.encodeToString(imageStore, Base64.DEFAULT);
         //imagedecoded = android.util.Base64.encodeToString(imageStore,Base64.DEFAULT);
 
     }

@@ -1,10 +1,7 @@
 package com.example.oneshop;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,10 +10,15 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.oneshop.databinding.ActivityLoginBinding;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,6 +39,31 @@ public class loginActivity extends AppCompatActivity {
         setContentView(view);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getSupportActionBar().hide();
+
+
+        //spinner dropdown
+
+//        String[] vowel = {"a","e","o","u"};
+//        ArrayList<String> arrayList = new ArrayList<>();
+//        for(int i=0; i<= vowel.length; i++)
+//        {
+//            arrayList.add(vowel[i]);
+//        }
+
+
+
+//        ArrayList<String> years = new ArrayList<>();
+//        int currentyear = Calendar.getInstance().get(Calendar.YEAR);
+//        int endyear = 2043;
+//        for(int i=currentyear; i<=endyear; i++)
+//        {
+//            years.add(Integer.toString(i));
+//        }
+//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,years);
+//        activityLoginBinding.spinner.setAdapter(arrayAdapter);
+
+        //end spinner dropdown
 
 
 // Custom Hide/Show Password fields
@@ -110,8 +137,7 @@ public class loginActivity extends AppCompatActivity {
     private void MainPage() {
         Intent intent = new Intent(this,MainActivity.class);
         Bundle bundle = new Bundle();
-//        bundle.putString("name",email);
-//        bundle.putString("password", password);
+        bundle.putString("email", email);
         intent.putExtras(bundle);
         //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -170,6 +196,7 @@ public class loginActivity extends AppCompatActivity {
 
     public void checkValidation()
     {
+
         email = activityLoginBinding.loginEmail.getText().toString();
         password = activityLoginBinding.loginPass.getText().toString();
         if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password))

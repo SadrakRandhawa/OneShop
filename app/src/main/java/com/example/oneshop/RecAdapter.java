@@ -112,6 +112,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
     }
 
 
+
     private void setAnimation(View setAnimation, int position) {
         if (position > LastPosition) {
             ScaleAnimation scaleAnimation = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f

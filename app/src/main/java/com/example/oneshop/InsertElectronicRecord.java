@@ -71,28 +71,31 @@ public class InsertElectronicRecord extends AppCompatActivity {
 
     }
 
-    private void InsertRecord(String edittitle, String editdetail,String editwarrenty,String edPrice) {
-        Call<responsemessage> call = apiController.getInstance().myapi().uploadElectronicData(imagedecoded,edittitle,editdetail,editwarrenty,edPrice);
+    private void InsertRecord(String edittitle, String editdetail, String editwarranty, String editprice) {
+        Call<responsemessage> call = apiController.getInstance().myapi().uploadElectronicData(imagedecoded,edittitle,editdetail,editwarranty,editprice);
         call.enqueue(new Callback<responsemessage>() {
             @Override
             public void onResponse(Call<responsemessage> call, Response<responsemessage> response) {
-                responsemessage rm = response.body();
-                if(rm == null)
+                responsemessage ms = response.body();
+                if(ms != null)
                 {
-                    Toast.makeText(InsertElectronicRecord.this, "Something missing for uploading", Toast.LENGTH_SHORT).show();
+                  title.setText("");
+                  detail.setText("");
+                  warrenty.setText("");
+                  price.setText("");
+                  startActivity(new Intent(InsertElectronicRecord.this,MainActivity.class));
+                  finish();
                 }
-                title.setText("");
-                detail.setText("");
-                price.setText("");
-                imageView.setVisibility(View.GONE);
-                startActivity(new Intent(InsertElectronicRecord.this,MainActivity.class));
-
+                else
+                {
+                    Toast.makeText(InsertElectronicRecord.this, "Something missing for upload", Toast.LENGTH_SHORT).show();
+                }
 
             }
 
             @Override
             public void onFailure(Call<responsemessage> call, Throwable t) {
-                Toast.makeText(InsertElectronicRecord.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(InsertElectronicRecord.this, "Data not Received", Toast.LENGTH_SHORT).show();
             }
         });
     }

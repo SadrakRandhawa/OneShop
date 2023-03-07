@@ -21,7 +21,6 @@
         android:id="@+id/drawerlayout"
         android:background="#fff"
         tools:context=".MainActivity"
-
         android:backgroundTint="#fff"
         >
         <include
@@ -37,10 +36,6 @@
             android:background="#fff"
             android:layout_gravity="start"
             android:id="@+id/navigation">
-
         </com.google.android.material.navigation.NavigationView>
     </androidx.drawerlayout.widget.DrawerLayout>
-
-
-
 </androidx.appcompat.widget.LinearLayoutCompat>

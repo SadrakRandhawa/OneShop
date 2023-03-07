@@ -38,6 +38,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.oneshop.Interface.furnitureInterface;
+import com.example.oneshop.models.furnitureModel;
+import com.example.oneshop.presenter.furniturePresenter;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -47,13 +50,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements furnitureInterface.view {
 
    // ActivityMainBinding activityMainBinding;
     Toolbar toolbar;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
+
+    furniturePresenter  Presenter;
 
     //Admin work
     EditText adminName,adminPass;
@@ -62,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView, furnrecyclerview, electronicrecycler;
     RecAdapter recAdapter;
     ElectronicesAdapter electronicesAdapter;
-    furnitureAdapter furnitureAdapter;
+    furnitureAdapter furnitureAdap;
+    public static List<furnitureModel> fetchFurnitureRecord;
      public static List<fetchRecordModel> fetchRecordModelArrayList;
      public static List<fetchElectronicModel> fetchElectronicModelList;
     TextView toolbartext,uploadRecord;
@@ -73,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
 //        View view = activityMainBinding.getRoot();
 //        setContentView(view);
         setContentView(R.layout.activity_main);
+        Presenter = new furniturePresenter(this);
 
 
         toolbar = findViewById(R.id.toolbar);
@@ -90,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
 
         //get HeaderView text
         View headerview = navigationView.getHeaderView(0);
-
         toolbartext = headerview.findViewById(R.id.headertxt);
         Intent intent = getIntent();
         String value = intent.getStringExtra("userName");
@@ -113,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Contact Us", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.logout:
-
                         SharedPreferences sharedPreferences = getSharedPreferences("private",MODE_PRIVATE);
                         sharedPreferences.edit().remove("logged").commit();
                         Intent intent = new Intent(MainActivity.this,loginActivity.class);
@@ -134,9 +139,13 @@ public class MainActivity extends AppCompatActivity {
 
         fetchRecordModelArrayList = new ArrayList<>();
         fetchElectronicModelList = new ArrayList<>();
+        fetchFurnitureRecord = new ArrayList<>();
         recyclerView = findViewById(R.id.recView);
         electronicrecycler = findViewById(R.id.recView1);
         furnrecyclerview = findViewById(R.id.recView2);
+
+
+
 
         recyclerView.setHasFixedSize(true);
         //GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this,1);
@@ -145,21 +154,35 @@ public class MainActivity extends AppCompatActivity {
 
         //recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this,LinearLayoutManager.HORIZONTAL,false));
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.addItemDecoration(new LinePagerIndicatorDecoration());
+        //recyclerView.addItemDecoration(new LinePagerIndicatorDecoration());
         linearLayoutManager.findFirstVisibleItemPosition();
         SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(recyclerView);
+
+
+
+
         //recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(),1));
 
         //electronices
-
-//
         LinearLayoutManager electricManager = new LinearLayoutManager(MainActivity.this,LinearLayoutManager.HORIZONTAL,false);
         electronicrecycler.setLayoutManager(electricManager);
-        electronicrecycler.addItemDecoration(new LinePagerIndicatorDecoration());
+        //electronicrecycler.addItemDecoration(new LinePagerIndicatorDecoration());
         linearLayoutManager.findFirstVisibleItemPosition();
         SnapHelper snapHelperele = new PagerSnapHelper();
         snapHelperele.attachToRecyclerView(electronicrecycler);
+
+
+        //furniture setting
+        furnrecyclerview.setHasFixedSize(true);
+        LinearLayoutManager furniturelinearlayout = new LinearLayoutManager(MainActivity.this,LinearLayoutManager.HORIZONTAL,false);
+        furnrecyclerview.setLayoutManager(furniturelinearlayout);
+        //furnrecyclerview.addItemDecoration(new LinePagerIndicatorDecoration());
+        furniturelinearlayout.findFirstVisibleItemPosition();
+        SnapHelper snapHelperfurn = new PagerSnapHelper();
+        snapHelperfurn.attachToRecyclerView(furnrecyclerview);
+
+
         //Admin work
 
         uploadRecord.setOnClickListener(new View.OnClickListener() {
@@ -262,9 +285,70 @@ public class MainActivity extends AppCompatActivity {
         getListValue();
         getElectronicsValue();
 
+        //furniture all functionality
+        getFurniture();
+        getUpdated();
 
 
 
+
+    }
+
+    private void getUpdated() {
+        furnrecyclerview.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(), furnrecyclerview, new RecyclerItemClickListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                AlertDialog.Builder alertbuilder = new AlertDialog.Builder(MainActivity.this);
+                alertbuilder.setTitle(fetchFurnitureRecord.get(position).getName());
+                String[] items = {"update","Delete"};
+                alertbuilder.setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        switch (i)
+                        {
+                            case 0:
+                            startActivity(new Intent(MainActivity.this,updateFurniture.class)
+                                    .putExtra("position",position));
+
+                                break;
+                            case 1:
+                                DeleteFurniture(fetchFurnitureRecord.get(position).getId());
+                                break;
+                        }
+                    }
+                });
+                alertbuilder.create().show();
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+    }
+
+    private void DeleteFurniture(String id) {
+       Presenter.deleteFurnitureData(id);
+       onSucess("Delete Successfully");
+       getFurniture();
+    }
+
+    private void getFurniture() {
+        Call<List<furnitureModel>> call = apiController.getInstance().myapi().getfurnitureData();
+        call.enqueue(new Callback<List<furnitureModel>>() {
+            @Override
+            public void onResponse(Call<List<furnitureModel>> call, Response<List<furnitureModel>> response) {
+                fetchFurnitureRecord = response.body();
+                furnitureAdap = new furnitureAdapter(fetchFurnitureRecord,getApplicationContext());
+                furnrecyclerview.setAdapter(furnitureAdap);
+                furnitureAdap.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<furnitureModel>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void getElectronicsValue() {
@@ -314,10 +398,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<fetchRecordModel>> call, Response<List<fetchRecordModel>> response) {
                 fetchRecordModelArrayList = response.body();
-                recAdapter = new RecAdapter(fetchRecordModelArrayList, getApplicationContext());
-//                recAdapter = new RecAdapter(md);
+                recAdapter = new RecAdapter(fetchRecordModelArrayList,getApplicationContext());
                 recyclerView.setAdapter(recAdapter);
                 recAdapter.notifyDataSetChanged();
+
+
+//                fetchRecordModelArrayList = response.body();
+//                recAdapter = new RecAdapter(fetchRecordModelArrayList, getApplicationContext());
+////                recAdapter = new RecAdapter(md);
+//                recyclerView.setAdapter(recAdapter);
+//                recAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -356,6 +446,16 @@ public class MainActivity extends AppCompatActivity {
         androidx.appcompat.app.AlertDialog alertDialog = builder.create();
         alertDialog.show();
         //super.onBackPressed();
+    }
+
+    @Override
+    public void onSucess(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onFailure(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 //    @Override
 //    public void onBackPressed() {
